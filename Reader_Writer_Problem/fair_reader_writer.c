@@ -349,6 +349,7 @@ void *writer(void *arg)
 
         pthread_mutex_unlock(&w_gate);
         pthread_mutex_unlock(&r_gate);
+        nanosleep(&req, &rem);
     }
     pthread_exit(0);
 }
