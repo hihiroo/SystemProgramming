@@ -269,8 +269,9 @@ void *reader(void *arg)
         pthread_mutex_lock(&r_gate);
         pthread_mutex_lock(&shared_variables);
         if(r_cnt++ == 0) pthread_mutex_lock(&w_gate);
+        pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행
         pthread_mutex_unlock(&shared_variables);
-        pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행 
+         
 
         /*
          * Begin Critical Section
@@ -316,7 +317,7 @@ void *writer(void *arg)
     while (alive) {
         pthread_mutex_lock(&r_gate);
         pthread_mutex_lock(&w_gate);
-
+        pthread_mutex_unlock(&r_gate);
         /*
          * Begin Critical Section
          */
@@ -345,12 +346,9 @@ void *writer(void *arg)
         }
         /* 
          * End Critical Section
-         */
-
+        */
         pthread_mutex_unlock(&w_gate);
-        pthread_mutex_unlock(&r_gate);
-        nanosleep(&req, &rem);
-        nanosleep(&req, &rem);
+        
     }
     pthread_exit(0);
 }
