@@ -367,6 +367,13 @@ int main(void)
     struct timespec req, rem;
 
     /*
+     * Initialize mutex locks
+     */
+    pthread_mutex_init(&r_gate, NULL);
+    pthread_mutex_init(&w_gate, NULL);
+    pthread_mutex_init(&shared_variables, NULL);
+
+    /*
      * Create RNUM reader threads
      */
     for (i = 0; i < RNUM; ++i) {
