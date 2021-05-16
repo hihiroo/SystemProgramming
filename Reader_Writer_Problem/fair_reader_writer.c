@@ -243,7 +243,6 @@ char *e[L3] = {
  * alive 값이 0이 되면 무한 루프를 빠져나와 스레드를 자연스럽게 종료한다.
  */
 int alive = 1;
-int w_cnt = 0; // 대기+출력 중인 writer 개수
 int r_cnt = 0; // 출력 중인 reader 개수
 pthread_mutex_t shared_variables; // 공유 변수에 접근
 pthread_mutex_t r_gate; // reader가 CS에 접근
