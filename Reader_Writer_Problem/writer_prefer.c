@@ -349,10 +349,12 @@ void *writer(void *arg)
         /* 
          * End Critical Section
          */
+        pthread_mutex_unlock(&w_gate);
+
         pthread_mutex_lock(&shared_variables);
         if(--w_cnt == 0) pthread_mutex_unlock(&r_gate);
         pthread_mutex_unlock(&shared_variables);
-        pthread_mutex_unlock(&w_gate);
+        
     }
     pthread_exit(0);
 }
