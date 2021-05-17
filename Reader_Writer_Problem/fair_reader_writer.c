@@ -324,19 +324,19 @@ void *writer(void *arg)
         switch (id) {
             case 0:
                 for (i = 0; i < L1; ++i) {
-                    printf("%shi\n", t[i]);
+                    printf("%s\n", t[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
             case 1:
                 for (i = 0; i < L2; ++i) {
-                    printf("%shi\n", d[i]);
+                    printf("%s\n", d[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
             case 2:
                 for (i = 0; i < L3; ++i) {
-                    printf("%shi\n", e[i]);
+                    printf("%s\n", e[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
