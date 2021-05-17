@@ -266,12 +266,11 @@ void *reader(void *arg)
      * 스레드가 살아 있는 동안 같은 문자열 시퀀스 <XXX...XX>를 반복해서 출력한다.
      */
     while (alive) {
-        pthread_mutex_lock(&shared_variables);
         pthread_mutex_lock(&r_gate);
+        pthread_mutex_lock(&shared_variables);
         if(r_cnt++ == 0) pthread_mutex_lock(&w_gate);
         pthread_mutex_unlock(&shared_variables);
         pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행
-        
         
         /*
          * Begin Critical Section
@@ -325,19 +324,19 @@ void *writer(void *arg)
         switch (id) {
             case 0:
                 for (i = 0; i < L1; ++i) {
-                    printf("%s\n", t[i]);
+                    printf("%shi\n", t[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
             case 1:
                 for (i = 0; i < L2; ++i) {
-                    printf("%s\n", d[i]);
+                    printf("%shi\n", d[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
             case 2:
                 for (i = 0; i < L3; ++i) {
-                    printf("%s\n", e[i]);
+                    printf("%shi\n", e[i]);
                     nanosleep(&req, &rem);
                 }
                 break;
@@ -348,7 +347,6 @@ void *writer(void *arg)
          * End Critical Section
         */
         pthread_mutex_unlock(&w_gate);
-        
     }
     pthread_exit(0);
 }
