@@ -403,7 +403,7 @@ int main(void)
      * Wait for 0.2 second while the threads are working
      */
     req.tv_sec = 0;
-    req.tv_nsec = 200000000L;
+    req.tv_nsec = 300000000L;
     nanosleep(&req, &rem);
     /*
      * Now terminate all threads and leave
