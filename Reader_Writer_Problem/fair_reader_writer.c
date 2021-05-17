@@ -269,10 +269,10 @@ void *reader(void *arg)
         pthread_mutex_lock(&r_gate);
         pthread_mutex_lock(&shared_variables);
         if(r_cnt++ == 0) pthread_mutex_lock(&w_gate);
-        pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행
         pthread_mutex_unlock(&shared_variables);
-         
-
+        pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행
+        
+        
         /*
          * Begin Critical Section
          */
@@ -397,7 +397,7 @@ int main(void)
      * Wait for 0.2 second while the threads are working
      */
     req.tv_sec = 0;
-    req.tv_nsec = 550000000L;
+    req.tv_nsec = 500000000L;
     nanosleep(&req, &rem);
     /*
      * Now terminate all threads and leave
