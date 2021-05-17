@@ -266,8 +266,8 @@ void *reader(void *arg)
      * 스레드가 살아 있는 동안 같은 문자열 시퀀스 <XXX...XX>를 반복해서 출력한다.
      */
     while (alive) {
-        pthread_mutex_lock(&r_gate);
         pthread_mutex_lock(&shared_variables);
+        pthread_mutex_lock(&r_gate);
         if(r_cnt++ == 0) pthread_mutex_lock(&w_gate);
         pthread_mutex_unlock(&shared_variables);
         pthread_mutex_unlock(&r_gate); // reader는 최대한 중복하여 실행
