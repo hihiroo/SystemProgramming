@@ -20,11 +20,11 @@ int parse_cmd (char* in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN]);
 void execute_cmd (int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN]);
 
 
-void main()
+int main()
 {
 	int num_args;
 
-	while(num_args = user_in() != EOF)
+	while((num_args = user_in()) != EOF)
 	{
 		execute_cmd(num_args, parse_args);
 	}
@@ -88,8 +88,17 @@ int parse_cmd(char *in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 	printf("input:%s\n", in_buf);
 
 
-	//your code here
-	
+	char *token = strtok(in_buf, " \n");
+	int cnt = 0;
+
+	while(token != NULL){
+		for(int i=0; token[i]!='\0'; i++)
+			parse_args[cnt][i] = token[i];
+		cnt++;
+		token = strtok(NULL, " \n");
+	}
+
+	num_args = cnt;
 
 	printf("output:\n");
 	for(i=0; i<num_args; i++) {
@@ -107,9 +116,21 @@ int parse_cmd(char *in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 **/
 void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 {
+	int state;
+	pid_t pid = fork();
 
+	char *str[num_args];
+	for(int i=0; i<num_args; i++) str[i] = parse_args[i];
+	str[num_args] = NULL;
 
-	//your code here
-
-
+	if(pid < 0){
+		fprintf(stderr, "Fork failed");
+		return;
+	}
+	else if(pid > 0){
+		waitpid(pid, &state, 0);
+	}
+	else{
+		execvp(str[0], str);
+	}
 }
