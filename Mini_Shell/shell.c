@@ -116,11 +116,13 @@ int parse_cmd(char *in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 **/
 void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 {
-	int state;
+	int state, background = 0;
 	pid_t pid = fork();
 
 	char *str[num_args];
 	for(int i=0; i<num_args; i++) str[i] = parse_args[i];
+	
+	if(num_args && strcmp(str[num_args-1],"&") == 0) num_args--, background = 1;
 	str[num_args] = NULL;
 
 	if(pid < 0){
@@ -128,7 +130,7 @@ void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 		return;
 	}
 	else if(pid > 0){
-		waitpid(pid, &state, 0);
+		if(!background) waitpid(pid, &state, 0);
 	}
 	else{
 		execvp(str[0], str);
