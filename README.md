@@ -26,3 +26,6 @@
 
 <br>
 
+## 시스템 프로그래밍
+[**Mini Shell 만들기**](https://github.com/hihiroo/SystemProgramming/tree/master/Mini_Shell)
+> Unix Simple Shell 프로젝트와 동일하지만 뼈대 코드가 더 완성도 있게 주어져 비교적 쉽다.
