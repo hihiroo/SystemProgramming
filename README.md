@@ -9,13 +9,18 @@
 <br>
 
 ## 운영체제
-  [**Reader-Writer Problem**](https://github.com/hihiroo/SystemProgramming/tree/master/Reader_Writer_Problem)
+[**Reader-Writer Problem**](https://github.com/hihiroo/SystemProgramming/tree/master/Reader_Writer_Problem)
 > 멀티 스레딩으로 Reader와 Writer를 실행했을 때 Reader끼리는 최대한 중복을 허용하고, Writer는 다른 Writer나 Reader가 끼어들 수 없도록 한다. 이때 스레드의 우선순위를 정하는 방법에 따라 Reader선호, Writer선호, Fair-reader-writer, 세 가지 방식으로 구현해본다.
 
 <br>
 
 [**Unix Simple Shell 만들기**](https://github.com/hihiroo/SystemProgramming/tree/master/Simple_Shell)
 > Unix 기반의 간단한 shell을 만들어본다. execvp를 이용하여 입력된 명령어를 실행하고, &, >, <, |을 올바르게 처리할 수 있어야 한다.
+
+<br>
+
+[**Sudoku Validator**](https://github.com/hihiroo/SystemProgramming/tree/master/Sudoku_Validator)
+> 멀티스레드를 이용하여 9X9 스도쿠를 검증하는 코드를 작성한다. 열과 행, 9개의 서브그리드, 총 11개의 스레드를 동시에 실행한다.
 
 
 <br>
