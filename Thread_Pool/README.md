@@ -46,4 +46,23 @@ In the source code download we provide the C source file threadpool.c as a parti
 <br>
 
 ## **macOS**
-macOS는 unnamed 세마포를 더 이상 지원하지 않는다. 맥 사용자는 named 세마포를 사용하여 구현한다. Ubuntu나 다른 Linux 사용자는 unnamed 세마포를 여전히 사용할 수 있다. macOS는 pthread 라이브러리가 기본적으로 내장되어 있어 Makefile 안에 있는 gcc 라이브러리 옵션인 -lpthread를 삭제해야 컴파일러가 불평하지 않는다
+macOS는 unnamed 세마포를 더 이상 지원하지 않는다. 맥 사용자는 named 세마포를 사용하여 구현한다. Ubuntu나 다른 Linux 사용자는 unnamed 세마포를 여전히 사용할 수 있다. macOS는 pthread 라이브러리가 기본적으로 내장되어 있어 Makefile 안에 있는 gcc 라이브러리 옵션인 -lpthread를 삭제해야 컴파일러가 불평하지 않는다.
+
+<br>
+
+## **출력 예시**
+![출력 예시](출력예시.JPG)
+
+<br>
+
+## **제출물**
+스레드 풀이 잘 설계되고 구현되었다는 것을 보여주는 자료를 각자가 판단하여 PDF로 묶어서 이름_학번_PROJ4.pdf로 제출한다. 여기에는 다음과 같은 것이 반드시 포함되어야 한다. <br>
+> • 본인이 설계한 스레드 풀 알고리즘 (1쪽 분량) <br>
+> 
+> • 컴파일 과정을 보여주는 화면 캡처 <br>
+> 
+> • 실행 결과물의 주요 장면과 그에 대한 설명 <br>
+> 
+> • 프로그램 소스파일 (threadpool.h, threadpool.c) 별도 제출 <br>
+> 
+> • 프로그램 실행 결과물 (client.txt) 별도 제출 <br>
