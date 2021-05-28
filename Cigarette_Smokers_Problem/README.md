@@ -1,19 +1,13 @@
 # 🌱 Operating Systems
 ## 0528 실습
-![문제 설명](./info.jpg)
 
+<img src="info.jpg" width="80%" height="80%">
 <br>
-
-![공급자가 하는 일](./agent.jpg)
-
+<img src="agent.jpg" width="80%" height="80%">
 <br>
-
-![흡연자가 하는 일](smoker.jpg)
-
+<img src="smoker.jpg" width="80%" height="80%">
 <br>
-
-![요구사항](request.jpg)
-
+<img src="request.jpg" width="70%" height="70%">
 <br>
 
 ## **제출**
