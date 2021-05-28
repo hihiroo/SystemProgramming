@@ -1,13 +1,13 @@
 # 🌱 Operating Systems
 ## 0528 실습
 
-<p align="center"><img src="info.jpg" width="60%" height="60%"></p>
+<p align="center"><img src="./img/info.jpg" width="60%" height="60%"></p>
 <br>
-<p align="center"><img src="agent.jpg" width="60%" height="60%"></p>
+<p align="center"><img src="./img/agent.jpg" width="60%" height="60%"></p>
 <br>
-<p align="center"><img src="smoker.jpg" width="60%" height="60%"></p>
+<p align="center"><img src="./img/smoker.jpg" width="60%" height="60%"></p>
 <br>
-<p align="center"><img src="request.jpg" width="50%" height="50%"></p>
+<p align="center"><img src="./img/request.jpg" width="50%" height="50%"></p>
 <br>
 
 <br>
