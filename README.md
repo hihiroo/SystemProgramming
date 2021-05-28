@@ -22,6 +22,10 @@
 [**Sudoku Validator**](https://github.com/hihiroo/SystemProgramming/tree/master/Sudoku_Validator)
 > 멀티스레드를 이용하여 9X9 스도쿠를 검증하는 코드를 작성한다. 열과 행, 9개의 서브그리드, 총 11개의 스레드를 동시에 실행한다.
 
+<br>
+
+[**Cigarette Smokers Problem**](https://github.com/hihiroo/SystemProgramming/tree/master/Cigarette_Smokers_Problem)
+> 3명의 흡연자는 각각 하나의 재료를 가지고 있고 담뱃잎, 종이, 불, 3가지 재료가 모두 모이면 흡연을 할 수 있다. 공급자는 2개의 재료를 무작위로 제공하고 흡연자가 흡연을 끝낼 때까지 기다린다. 세마포를 사용하여 공급자가 흡연자에게 재료를 공급하는 코드를 구현하고 발생하는 문제와 원인을 분석한다.
 
 <br>
 

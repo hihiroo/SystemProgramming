@@ -16,3 +16,7 @@
 1. 코드 설명<br>
 2. 코드 실행 결과 및 분석<br>
 3. 자원 할당 그래프
+
+<br>
+
+## [**결과 분석 및 솔루션 설명**](https://github.com/hihiroo/SystemProgramming/blob/master/Cigarette_Smokers_Problem/result.md)
