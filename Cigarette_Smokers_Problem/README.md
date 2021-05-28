@@ -1,13 +1,15 @@
 # 🌱 Operating Systems
 ## 0528 실습
 
-<img src="info.jpg" width="80%" height="80%">
+<p align="center"><img src="info.jpg" width="60%" height="60%"></p>
 <br>
-<img src="agent.jpg" width="80%" height="80%">
+<p align="center"><img src="agent.jpg" width="60%" height="60%"></p>
 <br>
-<img src="smoker.jpg" width="80%" height="80%">
+<p align="center"><img src="smoker.jpg" width="60%" height="60%"></p>
 <br>
-<img src="request.jpg" width="70%" height="70%">
+<p align="center"><img src="request.jpg" width="50%" height="50%"></p>
+<br>
+
 <br>
 
 ## **제출**
