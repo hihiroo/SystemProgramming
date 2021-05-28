@@ -99,14 +99,24 @@ void *agent(void *arg)
         turn = rand() % 3;
         switch (turn) {
             case 0:
+                sem_post(tabacco);
+                sem_post(paper);
+                break;
             case 1:
+                sem_post(paper);
+                sem_post(matches);
+                break;
             case 2:
+                sem_post(matches);
+                sem_post(tabacco);
+                break;
             default:
-                ;
+                break;
         }
         /*
          * 흡연자가 담배를 다 피울 때까지 기다린다.
          */
+        sem_wait(done);
     }
 }
 
