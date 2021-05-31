@@ -29,6 +29,11 @@
 
 <br>
 
+[**Thread Pool**](https://github.com/hihiroo/SystemProgramming/tree/master/Thread_Pool)
+> 스레드 풀을 만들고 관리하는 프로그램을 만든다. 대기열에 있는 작업을 하나씩 꺼내서 스레드 풀에 있는 스레드에 할당한다.
+
+<br>
+
 ## 컴퓨터 네트워크
 [**C로 웹 서버 구축하기**](https://github.com/hihiroo/SystemProgramming/tree/master/Socket)
 > C언어로 직접 소켓을 열어 웹 서버를 구축해본다. Chrome이나 Firefox같은 웹 브라우저로부터 html, jpg, mp3, pdf 등의 파일을 요청받으면 request massage를 분석하여 해당 파일을 response할 수 있어야 한다.
