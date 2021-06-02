@@ -52,6 +52,7 @@ static int enqueue(task_t t)
      rear = (rear+1) % QUEUE_SIZE;
      worktodo[rear] = t;
      cnt++;
+
      return 0;
 }
 
@@ -80,6 +81,18 @@ static sem_t *sem;
  */
 static void *worker(void *param)
 {
+    while(1){
+        sem_wait(sem); // 대기열에 작업이 있는 경우 실행
+        
+        task_t task; 
+
+        pthread_mutex_lock(&mutex);
+        int failed = dequeue(&task);
+        pthread_mutex_unlock(&mutex);
+        
+        if(!failed) task.function(task.data);
+    }
+    pthread_exit(0);
 }
 
 /*
@@ -88,7 +101,14 @@ static void *worker(void *param)
  */
 int pool_submit(void (*f)(void *p), void *p)
 {
+    task_t task = {.function = f, .data = p};
 
+    pthread_mutex_lock(&mutex);
+    int failed = enqueue(task); // 대기열에 실행할 함수 push
+    if(!failed) sem_post(sem);
+    pthread_mutex_unlock(&mutex);
+
+    return failed;
 }
 
 /*
