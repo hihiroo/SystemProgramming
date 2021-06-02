@@ -132,6 +132,7 @@ void pool_shutdown(void)
 {
     for(int i=0; i<NUMBER_OF_BEES; i++){
         pthread_cancel(bee[i]);
+        pthread_join(bee[i],NULL);
     }
 
     pthread_mutex_destroy(&mutex);
