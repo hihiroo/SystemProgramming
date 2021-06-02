@@ -62,7 +62,8 @@ static int enqueue(task_t t)
 static int dequeue(task_t *t)
 {
     if(isEmpty()) return 1;
-    *t = worktodo[++front];
+    front = (front+1) % QUEUE_SIZE;
+    *t = worktodo[front];
     cnt--;
     return 0;
 }
