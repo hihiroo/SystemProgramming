@@ -27,7 +27,7 @@ typedef struct {
  * 스레드 풀의 FIFO 대기열인 worktodo 배열로 원형 버퍼의 역할을 한다.
  */
 static task_t worktodo[QUEUE_SIZE];
-
+int front, rear, cnt; // 원형 큐의 front, rear, 큐 사이즈
 /*
  * mutex는 대기열을 조회하거나 변경하기 위해 사용하는 상호배타 락이다.
  */
@@ -37,8 +37,22 @@ static pthread_mutex_t mutex;
  * 대기열에 새 작업을 넣는다.
  * enqueue()는 성공하면 0, 꽉 차서 넣을 수 없으면 1을 리턴한다.
  */
+
+static int isFull(){
+    return cnt == QUEUE_SIZE;
+}
+
+static int isEmpty(){
+    return cnt == 0;
+}
+
 static int enqueue(task_t t)
 {
+     if(isFull()) return 1;
+     rear = (rear+1) % QUEUE_SIZE;
+     worktodo[rear] = t;
+     cnt++;
+     return 0;
 }
 
 /*
@@ -47,6 +61,10 @@ static int enqueue(task_t t)
  */
 static int dequeue(task_t *t)
 {
+    if(isEmpty()) return 1;
+    *t = worktodo[++front];
+    cnt--;
+    return 0;
 }
 
 /*
@@ -69,6 +87,7 @@ static void *worker(void *param)
  */
 int pool_submit(void (*f)(void *p), void *p)
 {
+
 }
 
 /*
@@ -76,6 +95,13 @@ int pool_submit(void (*f)(void *p), void *p)
  */
 void pool_init(void)
 {
+    front = -1, rear = -1, cnt = 0; // 큐 비우기
+    pthread_mutex_init(&mutex, NULL); 
+    sem = sem_open("sem", O_CREAT, 0644, 0);
+
+    for(int i=0; i<NUMBER_OF_BEES; i++){
+        pthread_create(&bee[i],NULL,worker,NULL);
+    }
 }
 
 /*
@@ -83,4 +109,11 @@ void pool_init(void)
  */
 void pool_shutdown(void)
 {
+    for(int i=0; i<NUMBER_OF_BEES; i++){
+        pthread_cancel(bee[i]);
+    }
+
+    pthread_mutex_destroy(&mutex);
+    sem_close(sem); 
+    sem_unlink("sem");
 }
