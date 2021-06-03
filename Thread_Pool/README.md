@@ -4,6 +4,8 @@
 **소프트웨어학부 2021년 5월 20일**
 <br><br>
 
+[**결과물 및 보고서 보러가기**](https://github.com/hihiroo/SystemProgramming/blob/master/Thread_Pool/report.md)
+
 ## **Designing a Thread Pool**
 When thread pools are used, a task is submitted
 to the pool and executed by a thread from the pool. Work is submitted to the pool using a queue,
@@ -51,7 +53,7 @@ macOS는 unnamed 세마포를 더 이상 지원하지 않는다. 맥 사용자�
 <br>
 
 ## **출력 예시**
-![출력 예시](출력예시.JPG)
+![출력 예시](./img/출력예시.JPG)
 
 <br>
 
