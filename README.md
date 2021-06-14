@@ -38,3 +38,8 @@
 ## 시스템 프로그래밍
 [**Mini Shell 만들기**](https://github.com/hihiroo/SystemProgramming/tree/master/Mini_Shell)
 > Unix Simple Shell 프로젝트와 동일하지만 뼈대 코드가 더 완성도 있게 주어져 비교적 쉽다.
+
+<br>
+
+[**Enhanced Shell 만들기**](https://github.com/hihiroo/SystemProgramming/tree/master/Enhanced_Shell)
+> mini shell에서 더 발전된 버전의 shell을 만든다. 파이프와 chane directory, 백그라운드 실행(&) 기능을 추가한다.
