@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <string.h>
 
 #define MAX_USER_IN 100
@@ -115,6 +117,45 @@ int parse_cmd(char *in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
   * input1: num_args (1st arg)
   * input2: parse_args (2nd args)
 **/
+
+void real_execute(int num_args, char **args){
+
+	int background = 0, status;
+	
+	for(int i=0; i<num_args; i++){
+		if(strcmp(args[i],"&") == 0){
+			background = 1;
+			args[i] = NULL;
+		}
+		else if(strcmp(args[i], ">") == 0){
+			int fd = open(args[i+1], O_WRONLY|O_CREAT, 0666);
+			dup2(fd,STDOUT_FILENO);
+			close(fd);
+			args[i] = NULL;
+		}
+		else if(strcmp(args[i],"<") == 0){
+			int fd = open(args[i+1], O_RDONLY, 0666);
+			dup2(fd,STDIN_FILENO);
+			close(fd);
+			args[i] = NULL;
+		}
+	}
+
+	pid_t pid = fork();
+
+	switch(pid)
+	{
+		case -1:
+			perror("Fork Error");
+			break;
+		case 0:
+			execvp(args[0], args);
+			break;
+		default:
+			if(!background) waitpid(pid,&status,0);
+	}
+}
+
 void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 {
 	int i = 0;
@@ -135,8 +176,8 @@ void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 			perror("Fork Error");
 			break;
 		case 0:
-			execvp(args[0], args);
-			break;
+			real_execute(num_args, args);
+			exit(0);
 		default:
 			waitpid(pid,&status,0);
 	}
