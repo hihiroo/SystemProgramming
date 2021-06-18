@@ -117,43 +117,95 @@ int parse_cmd(char *in_buf, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
   * input1: num_args (1st arg)
   * input2: parse_args (2nd args)
 **/
+// 연산자 ID 부여
+int operator_id(char *str){ 
+    if(strcmp(str,">") == 0) return 1;
+    if(strcmp(str, "<") == 0) return 2;
+    if(strcmp(str, "|") == 0) return 3;
+    if(strcmp(str, "&") == 0) return 4;
+    return 0;
+}
 
-void real_execute(int num_args, char **args){
+// '<', '>'을 만나면 file redirecting
+void redirecting(char* file, int id){
+    if(id == 1){ // ‘>’ 
+        int fd = open(file, O_WRONLY|O_CREAT, 0666);
+        dup2(fd,STDOUT_FILENO);
+        close(fd);
+    }
+    else if(id == 2){ // ‘<’ 
+        int fd = open(file, O_RDONLY, 0666);
+        dup2(fd,STDIN_FILENO);
+        close(fd);
+    }
+}
 
-	int background = 0, status;
-	
-	for(int i=0; i<num_args; i++){
-		if(strcmp(args[i],"&") == 0){
-			background = 1;
-			args[i] = NULL;
-		}
-		else if(strcmp(args[i], ">") == 0){
-			int fd = open(args[i+1], O_WRONLY|O_CREAT, 0666);
-			dup2(fd,STDOUT_FILENO);
-			close(fd);
-			args[i] = NULL;
-		}
-		else if(strcmp(args[i],"<") == 0){
-			int fd = open(args[i+1], O_RDONLY, 0666);
-			dup2(fd,STDIN_FILENO);
-			close(fd);
-			args[i] = NULL;
-		}
-	}
+/* command_pos의 바로 다음 명령어를 찾는 함수
+ 더 이상 실행할 명령어가 args에 없으면 종료.
+ '&', '|' 바로 오른쪽의 args 값은 명령어이기 때문에 다음 명령어 자리로 one_command를 다시 호출한다.*/
+void one_command(char **args, int command_pos, int size){
+    if(command_pos == size) return;
 
-	pid_t pid = fork();
+    int background = 0, is_pipe = 0, next_command = size;
 
-	switch(pid)
-	{
-		case -1:
-			perror("Fork Error");
-			break;
-		case 0:
-			execvp(args[0], args);
-			break;
-		default:
-			if(!background) waitpid(pid,&status,0);
-	}
+    for(int i=command_pos; i<next_command; i++){
+        int id = operator_id(args[i]);
+
+        if(!id) continue;
+        args[i] = NULL;
+
+        if(id <= 2) redirecting(args[i+1],id); // <, > 
+        else{
+            if(id == 3) is_pipe = 1; // pipe
+            else if(id == 4) background = 1; // &
+            next_command = i+1; // the right of '&', '|' is command
+        }
+    }
+
+    if(is_pipe){
+        int state, fd[2];
+        pipe(fd); 
+        pid_t pid = fork();
+        
+        // pipe(A|B)
+        if(pid < 0){
+            fprintf(stderr, "Fork failed");
+            return;
+        }
+        else if(pid > 0){ // parent(B)
+            waitpid(pid, &state, 0);
+
+            dup2(fd[0],STDIN_FILENO);
+            close(fd[1]);
+            one_command(args, next_command, size);
+        }
+        else{ // child(A)
+            dup2(fd[1],STDOUT_FILENO);
+            close(fd[0]);
+            
+            execvp(args[command_pos], &args[command_pos]);
+        }
+        return;
+    } 
+    else{
+        int state;
+        pid_t pid;
+        pid = fork();
+
+        if(pid < 0){
+            fprintf(stderr, "Fork failed");
+            return;
+        }
+        else if(pid > 0){ // parent
+            // if background is false, wait child process terminated. 
+            if(!background) waitpid(pid, &state, 0); 
+            one_command(args, next_command, size);
+        }
+        else if(pid == 0){ // child
+            execvp(args[command_pos], &args[command_pos]);
+        }
+        return;
+    }
 }
 
 void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
@@ -170,13 +222,17 @@ void execute_cmd(int num_args, char parse_args[MAX_NUM_ARGS][MAX_ARG_LEN])
 
 	pid = fork();
 
+	for(int i=0; i<num_args; i++){
+		if(strcmp(args[i], "cd") == 0) chdir(args[i+1]);
+	}
+
 	switch(pid)
 	{
 		case -1:
 			perror("Fork Error");
 			break;
 		case 0:
-			real_execute(num_args, args);
+			one_command(args,0,num_args);
 			exit(0);
 		default:
 			waitpid(pid,&status,0);
