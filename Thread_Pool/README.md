@@ -4,7 +4,7 @@
 **소프트웨어학부 2021년 5월 20일**
 <br><br>
 
-[**결과물 및 보고서 보러가기**](https://github.com/hihiroo/SystemProgramming/blob/master/Thread_Pool/report.md)
+[**결과물 및 보고서 보러가기**](https://mksmk.notion.site/Operating-Systems-Project-4-dacf7be180c84e72a173a0ab1b32da15)
 
 ## **Designing a Thread Pool**
 When thread pools are used, a task is submitted
